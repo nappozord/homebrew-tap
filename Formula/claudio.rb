@@ -1,11 +1,43 @@
 class Claudio < Formula
-  desc "Desktop notification utility"
+  desc "Animated desktop banner for Claude Code on macOS"
   homepage "https://github.com/nappozord/claudio_desktop_notifier"
-  url "https://github.com/nappozord/claudio_desktop_notifier/releases/download/v1.1.0/claudio-v1.1.0-macos-arm64.tar.gz"
-  sha256 "787063ecb7b4b77119fc00265f10be9c10ff36f7028d6f01db7478913a3ff555"
-  version "1.1.0"
+  url "https://github.com/nappozord/claudio_desktop_notifier/archive/refs/tags/v1.2.0.tar.gz"
+  sha256 "13d673b7939721ee659ea5ee5b32863b4e144bf458f0a730e5ec7d77a478a399"
+
+  depends_on "jq"
+  depends_on :macos
 
   def install
-    bin.install "claudio"
+    mkdir "build"
+    system "swiftc", "-O", *Dir["src/*.swift"], "-o", "build/claudio"
+    libexec.install "build", "scripts", "install.sh", "uninstall.sh"
+    bin.install_symlink libexec/"build/claudio"
+
+    # Through opt_libexec, so the hooks claudio-setup registers keep working after `brew upgrade`.
+    { "claudio-setup" => "install.sh", "claudio-uninstall" => "uninstall.sh" }.each do |name, script|
+      (bin/name).write <<~SH
+        #!/bin/sh
+        exec "#{opt_libexec}/#{script}" "$@"
+      SH
+      chmod 0755, bin/name
+    end
+  end
+
+  def caveats
+    <<~EOS
+      To turn Claudio on, run this once:
+        claudio-setup
+
+      It registers Claudio's hooks in ~/.claude/settings.json (a backup is kept).
+      Already-open Claude Code sessions need /hooks opened once, or a restart.
+      Upgrades need no re-run.
+
+      To turn it off before `brew uninstall claudio`:
+        claudio-uninstall
+    EOS
+  end
+
+  test do
+    assert_match "crown", shell_output("#{bin}/claudio --props")
   end
 end
