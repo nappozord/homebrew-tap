@@ -1,8 +1,8 @@
 class Claudio < Formula
   desc "Animated desktop banner for Claude Code on macOS"
   homepage "https://github.com/nappozord/claudio_desktop_notifier"
-  url "https://github.com/nappozord/claudio_desktop_notifier/archive/refs/tags/v1.4.0.tar.gz"
-  sha256 "8efcc1fa60f1aa5a1c4cdc100bf6d3e9df61387c1db0d8ccb2d9ae4bd2183cb5"
+  url "https://github.com/nappozord/claudio_desktop_notifier/archive/refs/tags/v1.5.0.tar.gz"
+  sha256 "2a3918ee9c89a0827fa28ae67ad2793e9f82ed4c1f1fcd9e8c30b0d6a7cdb42e"
 
   depends_on "jq"
   depends_on :macos
