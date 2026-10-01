@@ -1,9 +1,9 @@
 class Claudio < Formula
   desc "Desktop notification utility"
   homepage "https://github.com/nappozord/claudio_desktop_notifier"
-  url "https://github.com/nappozord/claudio_desktop_notifier/releases/download/v1.0.0/claudio-v1.0.0-macos-arm64.tar.gz"
-  sha256 "2c932729e1f8b388c8c2657ff98fb704c789d13f429d94a3baddc17e11f8880d"
-  version "1.0.0"
+  url "https://github.com/nappozord/claudio_desktop_notifier/releases/download/v1.1.0/claudio-v1.1.0-macos-arm64.tar.gz"
+  sha256 "787063ecb7b4b77119fc00265f10be9c10ff36f7028d6f01db7478913a3ff555"
+  version "1.1.0"
 
   def install
     bin.install "claudio"
